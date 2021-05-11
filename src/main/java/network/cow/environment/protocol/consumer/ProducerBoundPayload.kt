@@ -6,4 +6,4 @@ import java.util.UUID
 /**
  * @author Benedikt Wüller
  */
-abstract class ProducerBoundPayload(consumerId: UUID) : Payload
+abstract class ProducerBoundPayload(val consumerId: UUID) : Payload
