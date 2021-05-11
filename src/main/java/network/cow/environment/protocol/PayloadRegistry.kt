@@ -1,6 +1,8 @@
 package network.cow.environment.protocol
 
 import com.google.gson.GsonBuilder
+import network.cow.environment.protocol.consumer.AudioStartedPayload
+import network.cow.environment.protocol.consumer.AudioStoppedPayload
 import network.cow.environment.protocol.consumer.FadeAudioPayload
 import network.cow.environment.protocol.consumer.PlayAudioPayload
 import network.cow.environment.protocol.consumer.SetPositionPayload
@@ -29,7 +31,9 @@ object PayloadRegistry {
             "play_audio" to PlayAudioPayload::class.java,
             "update_audio" to UpdateAudioPayload::class.java,
             "fade_audio" to FadeAudioPayload::class.java,
-            "stop_audio" to StopAudioPayload::class.java
+            "stop_audio" to StopAudioPayload::class.java,
+            "audio_started" to AudioStartedPayload::class.java,
+            "audio_stopped" to AudioStoppedPayload::class.java
     )
 
     fun getType(payload: Payload) = types.entries.first { it.value == payload.javaClass }.key
