@@ -19,7 +19,9 @@ import network.cow.environment.protocol.service.UnregisterConsumerPayload
  */
 object PayloadRegistry {
 
-    private val gson = GsonBuilder().create()
+    private val gson = GsonBuilder()
+            .registerTypeAdapterFactory(NullableTypAdapterFactory())
+            .create()
 
     private val types = mapOf(
             "register_consumer" to RegisterConsumerPayload::class.java,
