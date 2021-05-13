@@ -62,7 +62,7 @@ object Messages {
     }
 
     fun toJsonWithTypePrefix(message: Message) : String {
-        return message.javaClass.name + ";" + JsonFormat.printer().omittingInsignificantWhitespace().print(message)
+        return message.javaClass.name + ";" + JsonFormat.printer().omittingInsignificantWhitespace().includingDefaultValueFields().print(message)
     }
 
     fun fromJsonWithTypePrefix(json: String) : Message {
@@ -76,23 +76,23 @@ object Messages {
 
     fun validate(message: Message) : Boolean {
         return when (message) {
-            is AudioStartedEvent -> message.consumerId != null && message.id != null
-            is AudioStoppedEvent -> message.consumerId != null && message.id != null
-            is ConsumerConnectedEvent -> message.consumerId != null
-            is ConsumerDisconnectedEvent -> message.consumerId != null
-            is ConsumerRegisteredEvent -> message.consumerId != null && message.contextId != null && message.url != null
-            is FadeAudioRequest -> message.consumerId != null && message.id != null
-            is StopAudioRequest -> message.consumerId != null && message.id != null
+            is AudioStartedEvent -> message.consumerId.isNotEmpty() && message.id.isNotEmpty()
+            is AudioStoppedEvent -> message.consumerId.isNotEmpty() && message.id.isNotEmpty()
+            is ConsumerConnectedEvent -> message.consumerId.isNotEmpty()
+            is ConsumerDisconnectedEvent -> message.consumerId.isNotEmpty()
+            is ConsumerRegisteredEvent -> message.consumerId.isNotEmpty() && message.contextId.isNotEmpty() && message.url.isNotEmpty()
+            is FadeAudioRequest -> message.consumerId.isNotEmpty() && message.id.isNotEmpty()
+            is StopAudioRequest -> message.consumerId.isNotEmpty() && message.id.isNotEmpty()
             is PlayAudioRequest -> {
-                message.consumerId != null && message.id != null && message.key != null
-                        && (message.sprite?.let { this.validateSprite(it) } ?: true)
-                        && (message.position?.let { this.validateVector(it) } ?: true)
-                        && (message.pannerAttributes?.let { this.validatePannerAttributes(it) } ?: true)
+                if (message.hasSprite() && !this.validateSprite(message.sprite)) return false
+                if (message.hasPosition() && !this.validateVector(message.position)) return false
+                if (message.hasPannerAttributes() && !this.validatePannerAttributes(message.pannerAttributes)) return false
+                return message.consumerId.isNotEmpty() && message.id.isNotEmpty() && message.key.isNotEmpty()
             }
             is UpdateAudioRequest -> {
-                message.consumerId != null && message.id != null
-                        && (message.position?.let { this.validateVector(it) } ?: true)
-                        && (message.pannerAttributes?.let { this.validatePannerAttributes(it) } ?: true)
+                if (message.hasPosition() && !this.validateVector(message.position)) return false
+                if (message.hasPannerAttributes() && !this.validatePannerAttributes(message.pannerAttributes)) return false
+                return message.consumerId.isNotEmpty() && message.id.isNotEmpty()
             }
             else -> error("The message type ${message.javaClass.name} is not supported.")
         }
@@ -102,6 +102,6 @@ object Messages {
 
     fun validateVector(vector: Vector) = true
 
-    fun validatePannerAttributes(pannerAttributes: PannerAttributes) = pannerAttributes.distanceModel != null
+    fun validatePannerAttributes(pannerAttributes: PannerAttributes) = pannerAttributes.distanceModel.isNotEmpty()
 
 }
