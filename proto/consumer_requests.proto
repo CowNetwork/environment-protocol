@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package cow.environment.v1;
+option java_package = "network.cow.environment.protocol.v1";
+option java_multiple_files = true;
+
+message SetPositionRequest {
+    string consumer_id = 1;
+    Vector position = 2;
+    Vector front = 3;
+    Vector up = 4;
+}
+
+message PlayAudioRequest {
+    string consumer_id = 1;
+    string key = 2;
+    string id = 3;
+    double volume = 4;
+    double rate = 5;
+    bool loop = 6;
+    int32 loopFadeDuration = 7;
+    Sprite sprite = 8;
+    Vector position = 9;
+    PannerAttributes pannerAttributes = 10;
+}
+
+message UpdateAudioRequest {
+    string consumer_id = 1;
+    string id = 2;
+    double volume = 3;
+    double rate = 4;
+    bool loop = 5;
+    int32 loopFadeDuration = 6;
+    Vector position = 7;
+    PannerAttributes pannerAttributes = 8;
+}
+
+message FadeAudioRequest {
+    string consumer_id = 1;
+    string id = 2;
+    double volume = 3;
+    int32 duration = 4;
+}
+
+message StopAudioRequest {
+    string consumer_id = 1;
+    string id = 2;
+    int32 duration = 3;
+}
+
+message Sprite {
+    int32 from = 1;
+    int32 to = 2;
+}
+
+message Vector {
+    double x = 1;
+    double y = 2;
+    double z = 3;
+}
+
+message PannerAttributes {
+    string distance_model = 1;
+    double ref_distance = 2;
+    double rolloff_factor = 3;
+    double max_distance = 4;
+}

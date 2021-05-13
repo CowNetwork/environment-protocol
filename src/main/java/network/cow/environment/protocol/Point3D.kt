@@ -1,5 +1,6 @@
 package network.cow.environment.protocol
 
+import network.cow.environment.protocol.v1.Vector
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -8,6 +9,8 @@ data class Point3D(val x: Double, val y: Double, val z: Double) {
     fun squaredDistanceTo(other: Point3D) = (other.x - this.x).pow(2) + (other.y - this.y).pow(2) + (other.z - this.z).pow(2)
 
     fun distanceTo(other: Point3D) = sqrt(this.squaredDistanceTo(other))
+
+    fun toProtoVector(): Vector = Vector.newBuilder().setX(this.x).setY(this.y).setZ(this.z).build()
 
 }
 

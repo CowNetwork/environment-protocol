@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package cow.environment.v1;
+option java_package = "network.cow.environment.protocol.v1";
+option java_multiple_files = true;
+
+message ConsumerRegisteredEvent {
+    string context_id = 1;
+    string consumer_id = 2;
+    string url = 3;
+}
+
+message ConsumerConnectedEvent {
+    string consumer_id = 1;
+}
+
+message ConsumerDisconnectedEvent {
+    string consumer_id = 1;
+}

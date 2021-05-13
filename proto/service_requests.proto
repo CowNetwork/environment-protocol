@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package cow.environment.v1;
+option java_package = "network.cow.environment.protocol.v1";
+option java_multiple_files = true;
+
+message RegisterConsumerRequest {
+    string context_id = 1;
+}
+
+message UnregisterConsumerRequest {
+    string consumer_id = 1;
+}
