@@ -17,3 +17,9 @@ message ConsumerConnectedEvent {
 message ConsumerDisconnectedEvent {
     string consumer_id = 1;
 }
+
+message ConsumerChangedInstanceEvent {
+    string consumer_id = 1;
+    string host = 3;
+    int32 port = 4;
+}

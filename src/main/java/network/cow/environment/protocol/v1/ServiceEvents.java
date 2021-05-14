@@ -29,6 +29,11 @@ public final class ServiceEvents {
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_cow_environment_v1_ConsumerDisconnectedEvent_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_cow_environment_v1_ConsumerChangedInstanceEvent_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_cow_environment_v1_ConsumerChangedInstanceEvent_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -43,8 +48,10 @@ public final class ServiceEvents {
       "_id\030\001 \001(\t\022\023\n\013consumer_id\030\002 \001(\t\022\013\n\003url\030\003 " +
       "\001(\t\"-\n\026ConsumerConnectedEvent\022\023\n\013consume" +
       "r_id\030\001 \001(\t\"0\n\031ConsumerDisconnectedEvent\022" +
-      "\023\n\013consumer_id\030\001 \001(\tB\'\n#network.cow.envi" +
-      "ronment.protocol.v1P\001b\006proto3"
+      "\023\n\013consumer_id\030\001 \001(\t\"O\n\034ConsumerChangedI" +
+      "nstanceEvent\022\023\n\013consumer_id\030\001 \001(\t\022\014\n\004hos" +
+      "t\030\003 \001(\t\022\014\n\004port\030\004 \001(\005B\'\n#network.cow.env" +
+      "ironment.protocol.v1P\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -68,6 +75,12 @@ public final class ServiceEvents {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_cow_environment_v1_ConsumerDisconnectedEvent_descriptor,
         new java.lang.String[] { "ConsumerId", });
+    internal_static_cow_environment_v1_ConsumerChangedInstanceEvent_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_cow_environment_v1_ConsumerChangedInstanceEvent_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_cow_environment_v1_ConsumerChangedInstanceEvent_descriptor,
+        new java.lang.String[] { "ConsumerId", "Host", "Port", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
