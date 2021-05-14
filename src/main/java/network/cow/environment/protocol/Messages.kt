@@ -2,6 +2,7 @@ package network.cow.environment.protocol
 
 import com.google.protobuf.Message
 import com.google.protobuf.util.JsonFormat
+import network.cow.environment.protocol.v1.AudioDefinition
 import network.cow.environment.protocol.v1.AudioStartedEvent
 import network.cow.environment.protocol.v1.AudioStoppedEvent
 import network.cow.environment.protocol.v1.ConsumerConnectedEvent
@@ -10,8 +11,10 @@ import network.cow.environment.protocol.v1.ConsumerRegisteredEvent
 import network.cow.environment.protocol.v1.FadeAudioRequest
 import network.cow.environment.protocol.v1.PannerAttributes
 import network.cow.environment.protocol.v1.PlayAudioRequest
+import network.cow.environment.protocol.v1.RegisterConsumerRequest
 import network.cow.environment.protocol.v1.Sprite
 import network.cow.environment.protocol.v1.StopAudioRequest
+import network.cow.environment.protocol.v1.UnregisterConsumerRequest
 import network.cow.environment.protocol.v1.UpdateAudioRequest
 import network.cow.environment.protocol.v1.Vector
 import java.io.ByteArrayInputStream
@@ -76,6 +79,8 @@ object Messages {
 
     fun validate(message: Message) : Boolean {
         return when (message) {
+            is RegisterConsumerRequest -> message.contextId.isNotEmpty()
+            is UnregisterConsumerRequest -> message.consumerId.isNotEmpty()
             is AudioStartedEvent -> message.consumerId.isNotEmpty() && message.id.isNotEmpty()
             is AudioStoppedEvent -> message.consumerId.isNotEmpty() && message.id.isNotEmpty()
             is ConsumerConnectedEvent -> message.consumerId.isNotEmpty()
@@ -87,7 +92,10 @@ object Messages {
                 if (message.hasSprite() && !this.validateSprite(message.sprite)) return false
                 if (message.hasPosition() && !this.validateVector(message.position)) return false
                 if (message.hasPannerAttributes() && !this.validatePannerAttributes(message.pannerAttributes)) return false
-                return message.consumerId.isNotEmpty() && message.id.isNotEmpty() && message.key.isNotEmpty()
+                if (message.hasDefinition() && !this.validateDefinition(message.definition)) return false
+                if (message.hasKey() && message.key.isNotEmpty()) return false
+                if (!message.hasDefinition() && !message.hasKey()) return false
+                return message.consumerId.isNotEmpty() && message.id.isNotEmpty()
             }
             is UpdateAudioRequest -> {
                 if (message.hasPosition() && !this.validateVector(message.position)) return false
@@ -102,6 +110,12 @@ object Messages {
 
     fun validateVector(vector: Vector) = true
 
-    fun validatePannerAttributes(pannerAttributes: PannerAttributes) = pannerAttributes.distanceModel.isNotEmpty()
+    fun validatePannerAttributes(pannerAttributes: PannerAttributes) : Boolean {
+        return pannerAttributes.distanceModel.isNotEmpty()
+    }
+
+    fun validateDefinition(definition: AudioDefinition) : Boolean {
+        return definition.key.isNotEmpty() && definition.name.isNotEmpty() && definition.url.isNotEmpty()
+    }
 
 }

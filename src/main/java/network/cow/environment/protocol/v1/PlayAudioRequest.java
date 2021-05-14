@@ -17,7 +17,6 @@ private static final long serialVersionUID = 0L;
   }
   private PlayAudioRequest() {
     consumerId_ = "";
-    key_ = "";
     id_ = "";
   }
 
@@ -59,37 +58,51 @@ private static final long serialVersionUID = 0L;
           }
           case 18: {
             java.lang.String s = input.readStringRequireUtf8();
-
-            key_ = s;
+            identifierCase_ = 2;
+            identifier_ = s;
             break;
           }
           case 26: {
+            network.cow.environment.protocol.v1.AudioDefinition.Builder subBuilder = null;
+            if (identifierCase_ == 3) {
+              subBuilder = ((network.cow.environment.protocol.v1.AudioDefinition) identifier_).toBuilder();
+            }
+            identifier_ =
+                input.readMessage(network.cow.environment.protocol.v1.AudioDefinition.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom((network.cow.environment.protocol.v1.AudioDefinition) identifier_);
+              identifier_ = subBuilder.buildPartial();
+            }
+            identifierCase_ = 3;
+            break;
+          }
+          case 34: {
             java.lang.String s = input.readStringRequireUtf8();
 
             id_ = s;
             break;
           }
-          case 33: {
+          case 41: {
 
             volume_ = input.readDouble();
             break;
           }
-          case 41: {
+          case 49: {
 
             rate_ = input.readDouble();
             break;
           }
-          case 48: {
+          case 56: {
 
             loop_ = input.readBool();
             break;
           }
-          case 56: {
+          case 64: {
 
             loopFadeDuration_ = input.readInt32();
             break;
           }
-          case 66: {
+          case 74: {
             network.cow.environment.protocol.v1.Sprite.Builder subBuilder = null;
             if (sprite_ != null) {
               subBuilder = sprite_.toBuilder();
@@ -102,7 +115,7 @@ private static final long serialVersionUID = 0L;
 
             break;
           }
-          case 74: {
+          case 82: {
             network.cow.environment.protocol.v1.Vector.Builder subBuilder = null;
             if (position_ != null) {
               subBuilder = position_.toBuilder();
@@ -115,7 +128,7 @@ private static final long serialVersionUID = 0L;
 
             break;
           }
-          case 82: {
+          case 90: {
             network.cow.environment.protocol.v1.PannerAttributes.Builder subBuilder = null;
             if (pannerAttributes_ != null) {
               subBuilder = pannerAttributes_.toBuilder();
@@ -160,6 +173,47 @@ private static final long serialVersionUID = 0L;
             network.cow.environment.protocol.v1.PlayAudioRequest.class, network.cow.environment.protocol.v1.PlayAudioRequest.Builder.class);
   }
 
+  private int identifierCase_ = 0;
+  private java.lang.Object identifier_;
+  public enum IdentifierCase
+      implements com.google.protobuf.Internal.EnumLite,
+          com.google.protobuf.AbstractMessage.InternalOneOfEnum {
+    KEY(2),
+    DEFINITION(3),
+    IDENTIFIER_NOT_SET(0);
+    private final int value;
+    private IdentifierCase(int value) {
+      this.value = value;
+    }
+    /**
+     * @param value The number of the enum to look for.
+     * @return The enum associated with the given number.
+     * @deprecated Use {@link #forNumber(int)} instead.
+     */
+    @java.lang.Deprecated
+    public static IdentifierCase valueOf(int value) {
+      return forNumber(value);
+    }
+
+    public static IdentifierCase forNumber(int value) {
+      switch (value) {
+        case 2: return KEY;
+        case 3: return DEFINITION;
+        case 0: return IDENTIFIER_NOT_SET;
+        default: return null;
+      }
+    }
+    public int getNumber() {
+      return this.value;
+    }
+  };
+
+  public IdentifierCase
+  getIdentifierCase() {
+    return IdentifierCase.forNumber(
+        identifierCase_);
+  }
+
   public static final int CONSUMER_ID_FIELD_NUMBER = 1;
   private volatile java.lang.Object consumerId_;
   /**
@@ -199,21 +253,31 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int KEY_FIELD_NUMBER = 2;
-  private volatile java.lang.Object key_;
+  /**
+   * <code>string key = 2;</code>
+   * @return Whether the key field is set.
+   */
+  public boolean hasKey() {
+    return identifierCase_ == 2;
+  }
   /**
    * <code>string key = 2;</code>
    * @return The key.
    */
-  @java.lang.Override
   public java.lang.String getKey() {
-    java.lang.Object ref = key_;
+    java.lang.Object ref = "";
+    if (identifierCase_ == 2) {
+      ref = identifier_;
+    }
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      key_ = s;
+      if (identifierCase_ == 2) {
+        identifier_ = s;
+      }
       return s;
     }
   }
@@ -221,25 +285,60 @@ private static final long serialVersionUID = 0L;
    * <code>string key = 2;</code>
    * @return The bytes for key.
    */
-  @java.lang.Override
   public com.google.protobuf.ByteString
       getKeyBytes() {
-    java.lang.Object ref = key_;
+    java.lang.Object ref = "";
+    if (identifierCase_ == 2) {
+      ref = identifier_;
+    }
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      key_ = b;
+      if (identifierCase_ == 2) {
+        identifier_ = b;
+      }
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
     }
   }
 
-  public static final int ID_FIELD_NUMBER = 3;
+  public static final int DEFINITION_FIELD_NUMBER = 3;
+  /**
+   * <code>.cow.environment.v1.AudioDefinition definition = 3;</code>
+   * @return Whether the definition field is set.
+   */
+  @java.lang.Override
+  public boolean hasDefinition() {
+    return identifierCase_ == 3;
+  }
+  /**
+   * <code>.cow.environment.v1.AudioDefinition definition = 3;</code>
+   * @return The definition.
+   */
+  @java.lang.Override
+  public network.cow.environment.protocol.v1.AudioDefinition getDefinition() {
+    if (identifierCase_ == 3) {
+       return (network.cow.environment.protocol.v1.AudioDefinition) identifier_;
+    }
+    return network.cow.environment.protocol.v1.AudioDefinition.getDefaultInstance();
+  }
+  /**
+   * <code>.cow.environment.v1.AudioDefinition definition = 3;</code>
+   */
+  @java.lang.Override
+  public network.cow.environment.protocol.v1.AudioDefinitionOrBuilder getDefinitionOrBuilder() {
+    if (identifierCase_ == 3) {
+       return (network.cow.environment.protocol.v1.AudioDefinition) identifier_;
+    }
+    return network.cow.environment.protocol.v1.AudioDefinition.getDefaultInstance();
+  }
+
+  public static final int ID_FIELD_NUMBER = 4;
   private volatile java.lang.Object id_;
   /**
-   * <code>string id = 3;</code>
+   * <code>string id = 4;</code>
    * @return The id.
    */
   @java.lang.Override
@@ -256,7 +355,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string id = 3;</code>
+   * <code>string id = 4;</code>
    * @return The bytes for id.
    */
   @java.lang.Override
@@ -274,10 +373,10 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int VOLUME_FIELD_NUMBER = 4;
+  public static final int VOLUME_FIELD_NUMBER = 5;
   private double volume_;
   /**
-   * <code>double volume = 4;</code>
+   * <code>double volume = 5;</code>
    * @return The volume.
    */
   @java.lang.Override
@@ -285,10 +384,10 @@ private static final long serialVersionUID = 0L;
     return volume_;
   }
 
-  public static final int RATE_FIELD_NUMBER = 5;
+  public static final int RATE_FIELD_NUMBER = 6;
   private double rate_;
   /**
-   * <code>double rate = 5;</code>
+   * <code>double rate = 6;</code>
    * @return The rate.
    */
   @java.lang.Override
@@ -296,10 +395,10 @@ private static final long serialVersionUID = 0L;
     return rate_;
   }
 
-  public static final int LOOP_FIELD_NUMBER = 6;
+  public static final int LOOP_FIELD_NUMBER = 7;
   private boolean loop_;
   /**
-   * <code>bool loop = 6;</code>
+   * <code>bool loop = 7;</code>
    * @return The loop.
    */
   @java.lang.Override
@@ -307,10 +406,10 @@ private static final long serialVersionUID = 0L;
     return loop_;
   }
 
-  public static final int LOOPFADEDURATION_FIELD_NUMBER = 7;
+  public static final int LOOPFADEDURATION_FIELD_NUMBER = 8;
   private int loopFadeDuration_;
   /**
-   * <code>int32 loopFadeDuration = 7;</code>
+   * <code>int32 loopFadeDuration = 8;</code>
    * @return The loopFadeDuration.
    */
   @java.lang.Override
@@ -318,10 +417,10 @@ private static final long serialVersionUID = 0L;
     return loopFadeDuration_;
   }
 
-  public static final int SPRITE_FIELD_NUMBER = 8;
+  public static final int SPRITE_FIELD_NUMBER = 9;
   private network.cow.environment.protocol.v1.Sprite sprite_;
   /**
-   * <code>.cow.environment.v1.Sprite sprite = 8;</code>
+   * <code>.cow.environment.v1.Sprite sprite = 9;</code>
    * @return Whether the sprite field is set.
    */
   @java.lang.Override
@@ -329,7 +428,7 @@ private static final long serialVersionUID = 0L;
     return sprite_ != null;
   }
   /**
-   * <code>.cow.environment.v1.Sprite sprite = 8;</code>
+   * <code>.cow.environment.v1.Sprite sprite = 9;</code>
    * @return The sprite.
    */
   @java.lang.Override
@@ -337,17 +436,17 @@ private static final long serialVersionUID = 0L;
     return sprite_ == null ? network.cow.environment.protocol.v1.Sprite.getDefaultInstance() : sprite_;
   }
   /**
-   * <code>.cow.environment.v1.Sprite sprite = 8;</code>
+   * <code>.cow.environment.v1.Sprite sprite = 9;</code>
    */
   @java.lang.Override
   public network.cow.environment.protocol.v1.SpriteOrBuilder getSpriteOrBuilder() {
     return getSprite();
   }
 
-  public static final int POSITION_FIELD_NUMBER = 9;
+  public static final int POSITION_FIELD_NUMBER = 10;
   private network.cow.environment.protocol.v1.Vector position_;
   /**
-   * <code>.cow.environment.v1.Vector position = 9;</code>
+   * <code>.cow.environment.v1.Vector position = 10;</code>
    * @return Whether the position field is set.
    */
   @java.lang.Override
@@ -355,7 +454,7 @@ private static final long serialVersionUID = 0L;
     return position_ != null;
   }
   /**
-   * <code>.cow.environment.v1.Vector position = 9;</code>
+   * <code>.cow.environment.v1.Vector position = 10;</code>
    * @return The position.
    */
   @java.lang.Override
@@ -363,17 +462,17 @@ private static final long serialVersionUID = 0L;
     return position_ == null ? network.cow.environment.protocol.v1.Vector.getDefaultInstance() : position_;
   }
   /**
-   * <code>.cow.environment.v1.Vector position = 9;</code>
+   * <code>.cow.environment.v1.Vector position = 10;</code>
    */
   @java.lang.Override
   public network.cow.environment.protocol.v1.VectorOrBuilder getPositionOrBuilder() {
     return getPosition();
   }
 
-  public static final int PANNERATTRIBUTES_FIELD_NUMBER = 10;
+  public static final int PANNERATTRIBUTES_FIELD_NUMBER = 11;
   private network.cow.environment.protocol.v1.PannerAttributes pannerAttributes_;
   /**
-   * <code>.cow.environment.v1.PannerAttributes pannerAttributes = 10;</code>
+   * <code>.cow.environment.v1.PannerAttributes pannerAttributes = 11;</code>
    * @return Whether the pannerAttributes field is set.
    */
   @java.lang.Override
@@ -381,7 +480,7 @@ private static final long serialVersionUID = 0L;
     return pannerAttributes_ != null;
   }
   /**
-   * <code>.cow.environment.v1.PannerAttributes pannerAttributes = 10;</code>
+   * <code>.cow.environment.v1.PannerAttributes pannerAttributes = 11;</code>
    * @return The pannerAttributes.
    */
   @java.lang.Override
@@ -389,7 +488,7 @@ private static final long serialVersionUID = 0L;
     return pannerAttributes_ == null ? network.cow.environment.protocol.v1.PannerAttributes.getDefaultInstance() : pannerAttributes_;
   }
   /**
-   * <code>.cow.environment.v1.PannerAttributes pannerAttributes = 10;</code>
+   * <code>.cow.environment.v1.PannerAttributes pannerAttributes = 11;</code>
    */
   @java.lang.Override
   public network.cow.environment.protocol.v1.PannerAttributesOrBuilder getPannerAttributesOrBuilder() {
@@ -413,32 +512,35 @@ private static final long serialVersionUID = 0L;
     if (!getConsumerIdBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, consumerId_);
     }
-    if (!getKeyBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, key_);
+    if (identifierCase_ == 2) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, identifier_);
+    }
+    if (identifierCase_ == 3) {
+      output.writeMessage(3, (network.cow.environment.protocol.v1.AudioDefinition) identifier_);
     }
     if (!getIdBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, id_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, id_);
     }
     if (volume_ != 0D) {
-      output.writeDouble(4, volume_);
+      output.writeDouble(5, volume_);
     }
     if (rate_ != 0D) {
-      output.writeDouble(5, rate_);
+      output.writeDouble(6, rate_);
     }
     if (loop_ != false) {
-      output.writeBool(6, loop_);
+      output.writeBool(7, loop_);
     }
     if (loopFadeDuration_ != 0) {
-      output.writeInt32(7, loopFadeDuration_);
+      output.writeInt32(8, loopFadeDuration_);
     }
     if (sprite_ != null) {
-      output.writeMessage(8, getSprite());
+      output.writeMessage(9, getSprite());
     }
     if (position_ != null) {
-      output.writeMessage(9, getPosition());
+      output.writeMessage(10, getPosition());
     }
     if (pannerAttributes_ != null) {
-      output.writeMessage(10, getPannerAttributes());
+      output.writeMessage(11, getPannerAttributes());
     }
     unknownFields.writeTo(output);
   }
@@ -452,39 +554,43 @@ private static final long serialVersionUID = 0L;
     if (!getConsumerIdBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, consumerId_);
     }
-    if (!getKeyBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, key_);
+    if (identifierCase_ == 2) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, identifier_);
+    }
+    if (identifierCase_ == 3) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(3, (network.cow.environment.protocol.v1.AudioDefinition) identifier_);
     }
     if (!getIdBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, id_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, id_);
     }
     if (volume_ != 0D) {
       size += com.google.protobuf.CodedOutputStream
-        .computeDoubleSize(4, volume_);
+        .computeDoubleSize(5, volume_);
     }
     if (rate_ != 0D) {
       size += com.google.protobuf.CodedOutputStream
-        .computeDoubleSize(5, rate_);
+        .computeDoubleSize(6, rate_);
     }
     if (loop_ != false) {
       size += com.google.protobuf.CodedOutputStream
-        .computeBoolSize(6, loop_);
+        .computeBoolSize(7, loop_);
     }
     if (loopFadeDuration_ != 0) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(7, loopFadeDuration_);
+        .computeInt32Size(8, loopFadeDuration_);
     }
     if (sprite_ != null) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(8, getSprite());
+        .computeMessageSize(9, getSprite());
     }
     if (position_ != null) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(9, getPosition());
+        .computeMessageSize(10, getPosition());
     }
     if (pannerAttributes_ != null) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(10, getPannerAttributes());
+        .computeMessageSize(11, getPannerAttributes());
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -503,8 +609,6 @@ private static final long serialVersionUID = 0L;
 
     if (!getConsumerId()
         .equals(other.getConsumerId())) return false;
-    if (!getKey()
-        .equals(other.getKey())) return false;
     if (!getId()
         .equals(other.getId())) return false;
     if (java.lang.Double.doubleToLongBits(getVolume())
@@ -532,6 +636,19 @@ private static final long serialVersionUID = 0L;
       if (!getPannerAttributes()
           .equals(other.getPannerAttributes())) return false;
     }
+    if (!getIdentifierCase().equals(other.getIdentifierCase())) return false;
+    switch (identifierCase_) {
+      case 2:
+        if (!getKey()
+            .equals(other.getKey())) return false;
+        break;
+      case 3:
+        if (!getDefinition()
+            .equals(other.getDefinition())) return false;
+        break;
+      case 0:
+      default:
+    }
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -545,8 +662,6 @@ private static final long serialVersionUID = 0L;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + CONSUMER_ID_FIELD_NUMBER;
     hash = (53 * hash) + getConsumerId().hashCode();
-    hash = (37 * hash) + KEY_FIELD_NUMBER;
-    hash = (53 * hash) + getKey().hashCode();
     hash = (37 * hash) + ID_FIELD_NUMBER;
     hash = (53 * hash) + getId().hashCode();
     hash = (37 * hash) + VOLUME_FIELD_NUMBER;
@@ -571,6 +686,18 @@ private static final long serialVersionUID = 0L;
     if (hasPannerAttributes()) {
       hash = (37 * hash) + PANNERATTRIBUTES_FIELD_NUMBER;
       hash = (53 * hash) + getPannerAttributes().hashCode();
+    }
+    switch (identifierCase_) {
+      case 2:
+        hash = (37 * hash) + KEY_FIELD_NUMBER;
+        hash = (53 * hash) + getKey().hashCode();
+        break;
+      case 3:
+        hash = (37 * hash) + DEFINITION_FIELD_NUMBER;
+        hash = (53 * hash) + getDefinition().hashCode();
+        break;
+      case 0:
+      default:
     }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
@@ -707,8 +834,6 @@ private static final long serialVersionUID = 0L;
       super.clear();
       consumerId_ = "";
 
-      key_ = "";
-
       id_ = "";
 
       volume_ = 0D;
@@ -737,6 +862,8 @@ private static final long serialVersionUID = 0L;
         pannerAttributes_ = null;
         pannerAttributesBuilder_ = null;
       }
+      identifierCase_ = 0;
+      identifier_ = null;
       return this;
     }
 
@@ -764,7 +891,16 @@ private static final long serialVersionUID = 0L;
     public network.cow.environment.protocol.v1.PlayAudioRequest buildPartial() {
       network.cow.environment.protocol.v1.PlayAudioRequest result = new network.cow.environment.protocol.v1.PlayAudioRequest(this);
       result.consumerId_ = consumerId_;
-      result.key_ = key_;
+      if (identifierCase_ == 2) {
+        result.identifier_ = identifier_;
+      }
+      if (identifierCase_ == 3) {
+        if (definitionBuilder_ == null) {
+          result.identifier_ = identifier_;
+        } else {
+          result.identifier_ = definitionBuilder_.build();
+        }
+      }
       result.id_ = id_;
       result.volume_ = volume_;
       result.rate_ = rate_;
@@ -785,6 +921,7 @@ private static final long serialVersionUID = 0L;
       } else {
         result.pannerAttributes_ = pannerAttributesBuilder_.build();
       }
+      result.identifierCase_ = identifierCase_;
       onBuilt();
       return result;
     }
@@ -837,10 +974,6 @@ private static final long serialVersionUID = 0L;
         consumerId_ = other.consumerId_;
         onChanged();
       }
-      if (!other.getKey().isEmpty()) {
-        key_ = other.key_;
-        onChanged();
-      }
       if (!other.getId().isEmpty()) {
         id_ = other.id_;
         onChanged();
@@ -865,6 +998,21 @@ private static final long serialVersionUID = 0L;
       }
       if (other.hasPannerAttributes()) {
         mergePannerAttributes(other.getPannerAttributes());
+      }
+      switch (other.getIdentifierCase()) {
+        case KEY: {
+          identifierCase_ = 2;
+          identifier_ = other.identifier_;
+          onChanged();
+          break;
+        }
+        case DEFINITION: {
+          mergeDefinition(other.getDefinition());
+          break;
+        }
+        case IDENTIFIER_NOT_SET: {
+          break;
+        }
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -894,6 +1042,21 @@ private static final long serialVersionUID = 0L;
       }
       return this;
     }
+    private int identifierCase_ = 0;
+    private java.lang.Object identifier_;
+    public IdentifierCase
+        getIdentifierCase() {
+      return IdentifierCase.forNumber(
+          identifierCase_);
+    }
+
+    public Builder clearIdentifier() {
+      identifierCase_ = 0;
+      identifier_ = null;
+      onChanged();
+      return this;
+    }
+
 
     private java.lang.Object consumerId_ = "";
     /**
@@ -971,18 +1134,31 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object key_ = "";
+    /**
+     * <code>string key = 2;</code>
+     * @return Whether the key field is set.
+     */
+    @java.lang.Override
+    public boolean hasKey() {
+      return identifierCase_ == 2;
+    }
     /**
      * <code>string key = 2;</code>
      * @return The key.
      */
+    @java.lang.Override
     public java.lang.String getKey() {
-      java.lang.Object ref = key_;
+      java.lang.Object ref = "";
+      if (identifierCase_ == 2) {
+        ref = identifier_;
+      }
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        key_ = s;
+        if (identifierCase_ == 2) {
+          identifier_ = s;
+        }
         return s;
       } else {
         return (java.lang.String) ref;
@@ -992,14 +1168,20 @@ private static final long serialVersionUID = 0L;
      * <code>string key = 2;</code>
      * @return The bytes for key.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getKeyBytes() {
-      java.lang.Object ref = key_;
+      java.lang.Object ref = "";
+      if (identifierCase_ == 2) {
+        ref = identifier_;
+      }
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        key_ = b;
+        if (identifierCase_ == 2) {
+          identifier_ = b;
+        }
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
@@ -1015,8 +1197,8 @@ private static final long serialVersionUID = 0L;
       if (value == null) {
     throw new NullPointerException();
   }
-  
-      key_ = value;
+  identifierCase_ = 2;
+      identifier_ = value;
       onChanged();
       return this;
     }
@@ -1025,9 +1207,11 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearKey() {
-      
-      key_ = getDefaultInstance().getKey();
-      onChanged();
+      if (identifierCase_ == 2) {
+        identifierCase_ = 0;
+        identifier_ = null;
+        onChanged();
+      }
       return this;
     }
     /**
@@ -1041,15 +1225,156 @@ private static final long serialVersionUID = 0L;
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-      
-      key_ = value;
+      identifierCase_ = 2;
+      identifier_ = value;
       onChanged();
       return this;
     }
 
+    private com.google.protobuf.SingleFieldBuilderV3<
+        network.cow.environment.protocol.v1.AudioDefinition, network.cow.environment.protocol.v1.AudioDefinition.Builder, network.cow.environment.protocol.v1.AudioDefinitionOrBuilder> definitionBuilder_;
+    /**
+     * <code>.cow.environment.v1.AudioDefinition definition = 3;</code>
+     * @return Whether the definition field is set.
+     */
+    @java.lang.Override
+    public boolean hasDefinition() {
+      return identifierCase_ == 3;
+    }
+    /**
+     * <code>.cow.environment.v1.AudioDefinition definition = 3;</code>
+     * @return The definition.
+     */
+    @java.lang.Override
+    public network.cow.environment.protocol.v1.AudioDefinition getDefinition() {
+      if (definitionBuilder_ == null) {
+        if (identifierCase_ == 3) {
+          return (network.cow.environment.protocol.v1.AudioDefinition) identifier_;
+        }
+        return network.cow.environment.protocol.v1.AudioDefinition.getDefaultInstance();
+      } else {
+        if (identifierCase_ == 3) {
+          return definitionBuilder_.getMessage();
+        }
+        return network.cow.environment.protocol.v1.AudioDefinition.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cow.environment.v1.AudioDefinition definition = 3;</code>
+     */
+    public Builder setDefinition(network.cow.environment.protocol.v1.AudioDefinition value) {
+      if (definitionBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        identifier_ = value;
+        onChanged();
+      } else {
+        definitionBuilder_.setMessage(value);
+      }
+      identifierCase_ = 3;
+      return this;
+    }
+    /**
+     * <code>.cow.environment.v1.AudioDefinition definition = 3;</code>
+     */
+    public Builder setDefinition(
+        network.cow.environment.protocol.v1.AudioDefinition.Builder builderForValue) {
+      if (definitionBuilder_ == null) {
+        identifier_ = builderForValue.build();
+        onChanged();
+      } else {
+        definitionBuilder_.setMessage(builderForValue.build());
+      }
+      identifierCase_ = 3;
+      return this;
+    }
+    /**
+     * <code>.cow.environment.v1.AudioDefinition definition = 3;</code>
+     */
+    public Builder mergeDefinition(network.cow.environment.protocol.v1.AudioDefinition value) {
+      if (definitionBuilder_ == null) {
+        if (identifierCase_ == 3 &&
+            identifier_ != network.cow.environment.protocol.v1.AudioDefinition.getDefaultInstance()) {
+          identifier_ = network.cow.environment.protocol.v1.AudioDefinition.newBuilder((network.cow.environment.protocol.v1.AudioDefinition) identifier_)
+              .mergeFrom(value).buildPartial();
+        } else {
+          identifier_ = value;
+        }
+        onChanged();
+      } else {
+        if (identifierCase_ == 3) {
+          definitionBuilder_.mergeFrom(value);
+        }
+        definitionBuilder_.setMessage(value);
+      }
+      identifierCase_ = 3;
+      return this;
+    }
+    /**
+     * <code>.cow.environment.v1.AudioDefinition definition = 3;</code>
+     */
+    public Builder clearDefinition() {
+      if (definitionBuilder_ == null) {
+        if (identifierCase_ == 3) {
+          identifierCase_ = 0;
+          identifier_ = null;
+          onChanged();
+        }
+      } else {
+        if (identifierCase_ == 3) {
+          identifierCase_ = 0;
+          identifier_ = null;
+        }
+        definitionBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>.cow.environment.v1.AudioDefinition definition = 3;</code>
+     */
+    public network.cow.environment.protocol.v1.AudioDefinition.Builder getDefinitionBuilder() {
+      return getDefinitionFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.cow.environment.v1.AudioDefinition definition = 3;</code>
+     */
+    @java.lang.Override
+    public network.cow.environment.protocol.v1.AudioDefinitionOrBuilder getDefinitionOrBuilder() {
+      if ((identifierCase_ == 3) && (definitionBuilder_ != null)) {
+        return definitionBuilder_.getMessageOrBuilder();
+      } else {
+        if (identifierCase_ == 3) {
+          return (network.cow.environment.protocol.v1.AudioDefinition) identifier_;
+        }
+        return network.cow.environment.protocol.v1.AudioDefinition.getDefaultInstance();
+      }
+    }
+    /**
+     * <code>.cow.environment.v1.AudioDefinition definition = 3;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        network.cow.environment.protocol.v1.AudioDefinition, network.cow.environment.protocol.v1.AudioDefinition.Builder, network.cow.environment.protocol.v1.AudioDefinitionOrBuilder> 
+        getDefinitionFieldBuilder() {
+      if (definitionBuilder_ == null) {
+        if (!(identifierCase_ == 3)) {
+          identifier_ = network.cow.environment.protocol.v1.AudioDefinition.getDefaultInstance();
+        }
+        definitionBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            network.cow.environment.protocol.v1.AudioDefinition, network.cow.environment.protocol.v1.AudioDefinition.Builder, network.cow.environment.protocol.v1.AudioDefinitionOrBuilder>(
+                (network.cow.environment.protocol.v1.AudioDefinition) identifier_,
+                getParentForChildren(),
+                isClean());
+        identifier_ = null;
+      }
+      identifierCase_ = 3;
+      onChanged();;
+      return definitionBuilder_;
+    }
+
     private java.lang.Object id_ = "";
     /**
-     * <code>string id = 3;</code>
+     * <code>string id = 4;</code>
      * @return The id.
      */
     public java.lang.String getId() {
@@ -1065,7 +1390,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string id = 3;</code>
+     * <code>string id = 4;</code>
      * @return The bytes for id.
      */
     public com.google.protobuf.ByteString
@@ -1082,7 +1407,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string id = 3;</code>
+     * <code>string id = 4;</code>
      * @param value The id to set.
      * @return This builder for chaining.
      */
@@ -1097,7 +1422,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string id = 3;</code>
+     * <code>string id = 4;</code>
      * @return This builder for chaining.
      */
     public Builder clearId() {
@@ -1107,7 +1432,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string id = 3;</code>
+     * <code>string id = 4;</code>
      * @param value The bytes for id to set.
      * @return This builder for chaining.
      */
@@ -1125,7 +1450,7 @@ private static final long serialVersionUID = 0L;
 
     private double volume_ ;
     /**
-     * <code>double volume = 4;</code>
+     * <code>double volume = 5;</code>
      * @return The volume.
      */
     @java.lang.Override
@@ -1133,7 +1458,7 @@ private static final long serialVersionUID = 0L;
       return volume_;
     }
     /**
-     * <code>double volume = 4;</code>
+     * <code>double volume = 5;</code>
      * @param value The volume to set.
      * @return This builder for chaining.
      */
@@ -1144,7 +1469,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>double volume = 4;</code>
+     * <code>double volume = 5;</code>
      * @return This builder for chaining.
      */
     public Builder clearVolume() {
@@ -1156,7 +1481,7 @@ private static final long serialVersionUID = 0L;
 
     private double rate_ ;
     /**
-     * <code>double rate = 5;</code>
+     * <code>double rate = 6;</code>
      * @return The rate.
      */
     @java.lang.Override
@@ -1164,7 +1489,7 @@ private static final long serialVersionUID = 0L;
       return rate_;
     }
     /**
-     * <code>double rate = 5;</code>
+     * <code>double rate = 6;</code>
      * @param value The rate to set.
      * @return This builder for chaining.
      */
@@ -1175,7 +1500,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>double rate = 5;</code>
+     * <code>double rate = 6;</code>
      * @return This builder for chaining.
      */
     public Builder clearRate() {
@@ -1187,7 +1512,7 @@ private static final long serialVersionUID = 0L;
 
     private boolean loop_ ;
     /**
-     * <code>bool loop = 6;</code>
+     * <code>bool loop = 7;</code>
      * @return The loop.
      */
     @java.lang.Override
@@ -1195,7 +1520,7 @@ private static final long serialVersionUID = 0L;
       return loop_;
     }
     /**
-     * <code>bool loop = 6;</code>
+     * <code>bool loop = 7;</code>
      * @param value The loop to set.
      * @return This builder for chaining.
      */
@@ -1206,7 +1531,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>bool loop = 6;</code>
+     * <code>bool loop = 7;</code>
      * @return This builder for chaining.
      */
     public Builder clearLoop() {
@@ -1218,7 +1543,7 @@ private static final long serialVersionUID = 0L;
 
     private int loopFadeDuration_ ;
     /**
-     * <code>int32 loopFadeDuration = 7;</code>
+     * <code>int32 loopFadeDuration = 8;</code>
      * @return The loopFadeDuration.
      */
     @java.lang.Override
@@ -1226,7 +1551,7 @@ private static final long serialVersionUID = 0L;
       return loopFadeDuration_;
     }
     /**
-     * <code>int32 loopFadeDuration = 7;</code>
+     * <code>int32 loopFadeDuration = 8;</code>
      * @param value The loopFadeDuration to set.
      * @return This builder for chaining.
      */
@@ -1237,7 +1562,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>int32 loopFadeDuration = 7;</code>
+     * <code>int32 loopFadeDuration = 8;</code>
      * @return This builder for chaining.
      */
     public Builder clearLoopFadeDuration() {
@@ -1251,14 +1576,14 @@ private static final long serialVersionUID = 0L;
     private com.google.protobuf.SingleFieldBuilderV3<
         network.cow.environment.protocol.v1.Sprite, network.cow.environment.protocol.v1.Sprite.Builder, network.cow.environment.protocol.v1.SpriteOrBuilder> spriteBuilder_;
     /**
-     * <code>.cow.environment.v1.Sprite sprite = 8;</code>
+     * <code>.cow.environment.v1.Sprite sprite = 9;</code>
      * @return Whether the sprite field is set.
      */
     public boolean hasSprite() {
       return spriteBuilder_ != null || sprite_ != null;
     }
     /**
-     * <code>.cow.environment.v1.Sprite sprite = 8;</code>
+     * <code>.cow.environment.v1.Sprite sprite = 9;</code>
      * @return The sprite.
      */
     public network.cow.environment.protocol.v1.Sprite getSprite() {
@@ -1269,7 +1594,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>.cow.environment.v1.Sprite sprite = 8;</code>
+     * <code>.cow.environment.v1.Sprite sprite = 9;</code>
      */
     public Builder setSprite(network.cow.environment.protocol.v1.Sprite value) {
       if (spriteBuilder_ == null) {
@@ -1285,7 +1610,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.cow.environment.v1.Sprite sprite = 8;</code>
+     * <code>.cow.environment.v1.Sprite sprite = 9;</code>
      */
     public Builder setSprite(
         network.cow.environment.protocol.v1.Sprite.Builder builderForValue) {
@@ -1299,7 +1624,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.cow.environment.v1.Sprite sprite = 8;</code>
+     * <code>.cow.environment.v1.Sprite sprite = 9;</code>
      */
     public Builder mergeSprite(network.cow.environment.protocol.v1.Sprite value) {
       if (spriteBuilder_ == null) {
@@ -1317,7 +1642,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.cow.environment.v1.Sprite sprite = 8;</code>
+     * <code>.cow.environment.v1.Sprite sprite = 9;</code>
      */
     public Builder clearSprite() {
       if (spriteBuilder_ == null) {
@@ -1331,7 +1656,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.cow.environment.v1.Sprite sprite = 8;</code>
+     * <code>.cow.environment.v1.Sprite sprite = 9;</code>
      */
     public network.cow.environment.protocol.v1.Sprite.Builder getSpriteBuilder() {
       
@@ -1339,7 +1664,7 @@ private static final long serialVersionUID = 0L;
       return getSpriteFieldBuilder().getBuilder();
     }
     /**
-     * <code>.cow.environment.v1.Sprite sprite = 8;</code>
+     * <code>.cow.environment.v1.Sprite sprite = 9;</code>
      */
     public network.cow.environment.protocol.v1.SpriteOrBuilder getSpriteOrBuilder() {
       if (spriteBuilder_ != null) {
@@ -1350,7 +1675,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>.cow.environment.v1.Sprite sprite = 8;</code>
+     * <code>.cow.environment.v1.Sprite sprite = 9;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
         network.cow.environment.protocol.v1.Sprite, network.cow.environment.protocol.v1.Sprite.Builder, network.cow.environment.protocol.v1.SpriteOrBuilder> 
@@ -1370,14 +1695,14 @@ private static final long serialVersionUID = 0L;
     private com.google.protobuf.SingleFieldBuilderV3<
         network.cow.environment.protocol.v1.Vector, network.cow.environment.protocol.v1.Vector.Builder, network.cow.environment.protocol.v1.VectorOrBuilder> positionBuilder_;
     /**
-     * <code>.cow.environment.v1.Vector position = 9;</code>
+     * <code>.cow.environment.v1.Vector position = 10;</code>
      * @return Whether the position field is set.
      */
     public boolean hasPosition() {
       return positionBuilder_ != null || position_ != null;
     }
     /**
-     * <code>.cow.environment.v1.Vector position = 9;</code>
+     * <code>.cow.environment.v1.Vector position = 10;</code>
      * @return The position.
      */
     public network.cow.environment.protocol.v1.Vector getPosition() {
@@ -1388,7 +1713,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>.cow.environment.v1.Vector position = 9;</code>
+     * <code>.cow.environment.v1.Vector position = 10;</code>
      */
     public Builder setPosition(network.cow.environment.protocol.v1.Vector value) {
       if (positionBuilder_ == null) {
@@ -1404,7 +1729,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.cow.environment.v1.Vector position = 9;</code>
+     * <code>.cow.environment.v1.Vector position = 10;</code>
      */
     public Builder setPosition(
         network.cow.environment.protocol.v1.Vector.Builder builderForValue) {
@@ -1418,7 +1743,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.cow.environment.v1.Vector position = 9;</code>
+     * <code>.cow.environment.v1.Vector position = 10;</code>
      */
     public Builder mergePosition(network.cow.environment.protocol.v1.Vector value) {
       if (positionBuilder_ == null) {
@@ -1436,7 +1761,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.cow.environment.v1.Vector position = 9;</code>
+     * <code>.cow.environment.v1.Vector position = 10;</code>
      */
     public Builder clearPosition() {
       if (positionBuilder_ == null) {
@@ -1450,7 +1775,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.cow.environment.v1.Vector position = 9;</code>
+     * <code>.cow.environment.v1.Vector position = 10;</code>
      */
     public network.cow.environment.protocol.v1.Vector.Builder getPositionBuilder() {
       
@@ -1458,7 +1783,7 @@ private static final long serialVersionUID = 0L;
       return getPositionFieldBuilder().getBuilder();
     }
     /**
-     * <code>.cow.environment.v1.Vector position = 9;</code>
+     * <code>.cow.environment.v1.Vector position = 10;</code>
      */
     public network.cow.environment.protocol.v1.VectorOrBuilder getPositionOrBuilder() {
       if (positionBuilder_ != null) {
@@ -1469,7 +1794,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>.cow.environment.v1.Vector position = 9;</code>
+     * <code>.cow.environment.v1.Vector position = 10;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
         network.cow.environment.protocol.v1.Vector, network.cow.environment.protocol.v1.Vector.Builder, network.cow.environment.protocol.v1.VectorOrBuilder> 
@@ -1489,14 +1814,14 @@ private static final long serialVersionUID = 0L;
     private com.google.protobuf.SingleFieldBuilderV3<
         network.cow.environment.protocol.v1.PannerAttributes, network.cow.environment.protocol.v1.PannerAttributes.Builder, network.cow.environment.protocol.v1.PannerAttributesOrBuilder> pannerAttributesBuilder_;
     /**
-     * <code>.cow.environment.v1.PannerAttributes pannerAttributes = 10;</code>
+     * <code>.cow.environment.v1.PannerAttributes pannerAttributes = 11;</code>
      * @return Whether the pannerAttributes field is set.
      */
     public boolean hasPannerAttributes() {
       return pannerAttributesBuilder_ != null || pannerAttributes_ != null;
     }
     /**
-     * <code>.cow.environment.v1.PannerAttributes pannerAttributes = 10;</code>
+     * <code>.cow.environment.v1.PannerAttributes pannerAttributes = 11;</code>
      * @return The pannerAttributes.
      */
     public network.cow.environment.protocol.v1.PannerAttributes getPannerAttributes() {
@@ -1507,7 +1832,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>.cow.environment.v1.PannerAttributes pannerAttributes = 10;</code>
+     * <code>.cow.environment.v1.PannerAttributes pannerAttributes = 11;</code>
      */
     public Builder setPannerAttributes(network.cow.environment.protocol.v1.PannerAttributes value) {
       if (pannerAttributesBuilder_ == null) {
@@ -1523,7 +1848,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.cow.environment.v1.PannerAttributes pannerAttributes = 10;</code>
+     * <code>.cow.environment.v1.PannerAttributes pannerAttributes = 11;</code>
      */
     public Builder setPannerAttributes(
         network.cow.environment.protocol.v1.PannerAttributes.Builder builderForValue) {
@@ -1537,7 +1862,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.cow.environment.v1.PannerAttributes pannerAttributes = 10;</code>
+     * <code>.cow.environment.v1.PannerAttributes pannerAttributes = 11;</code>
      */
     public Builder mergePannerAttributes(network.cow.environment.protocol.v1.PannerAttributes value) {
       if (pannerAttributesBuilder_ == null) {
@@ -1555,7 +1880,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.cow.environment.v1.PannerAttributes pannerAttributes = 10;</code>
+     * <code>.cow.environment.v1.PannerAttributes pannerAttributes = 11;</code>
      */
     public Builder clearPannerAttributes() {
       if (pannerAttributesBuilder_ == null) {
@@ -1569,7 +1894,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.cow.environment.v1.PannerAttributes pannerAttributes = 10;</code>
+     * <code>.cow.environment.v1.PannerAttributes pannerAttributes = 11;</code>
      */
     public network.cow.environment.protocol.v1.PannerAttributes.Builder getPannerAttributesBuilder() {
       
@@ -1577,7 +1902,7 @@ private static final long serialVersionUID = 0L;
       return getPannerAttributesFieldBuilder().getBuilder();
     }
     /**
-     * <code>.cow.environment.v1.PannerAttributes pannerAttributes = 10;</code>
+     * <code>.cow.environment.v1.PannerAttributes pannerAttributes = 11;</code>
      */
     public network.cow.environment.protocol.v1.PannerAttributesOrBuilder getPannerAttributesOrBuilder() {
       if (pannerAttributesBuilder_ != null) {
@@ -1588,7 +1913,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>.cow.environment.v1.PannerAttributes pannerAttributes = 10;</code>
+     * <code>.cow.environment.v1.PannerAttributes pannerAttributes = 11;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
         network.cow.environment.protocol.v1.PannerAttributes, network.cow.environment.protocol.v1.PannerAttributes.Builder, network.cow.environment.protocol.v1.PannerAttributesOrBuilder> 

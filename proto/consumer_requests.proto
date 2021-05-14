@@ -13,15 +13,18 @@ message SetPositionRequest {
 
 message PlayAudioRequest {
     string consumer_id = 1;
-    string key = 2;
-    string id = 3;
-    double volume = 4;
-    double rate = 5;
-    bool loop = 6;
-    int32 loopFadeDuration = 7;
-    Sprite sprite = 8;
-    Vector position = 9;
-    PannerAttributes pannerAttributes = 10;
+    oneof identifier {
+        string key = 2;
+        AudioDefinition definition = 3;
+    }
+    string id = 4;
+    double volume = 5;
+    double rate = 6;
+    bool loop = 7;
+    int32 loopFadeDuration = 8;
+    Sprite sprite = 9;
+    Vector position = 10;
+    PannerAttributes pannerAttributes = 11;
 }
 
 message UpdateAudioRequest {
@@ -64,4 +67,13 @@ message PannerAttributes {
     double ref_distance = 2;
     double rolloff_factor = 3;
     double max_distance = 4;
+}
+
+message AudioDefinition {
+    string key = 1;
+    string name = 2;
+    string url = 3;
+    string sourceUrl = 4;
+    string reportUrl = 5;
+    string information = 6;
 }
